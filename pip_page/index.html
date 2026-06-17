@@ -264,7 +264,7 @@
 -->
 
 <script>
-  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyoRu1ByTiyoLrVD7_UEBLZlDSbS6KOhAP13W7S9uqpPpa_pwdqVh1WTYSRXEqs6Ec/exec";
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyeX8ZPGyFNpF824dzWcU-Znzi0_CC6slpdVf7FFa0J3hjbxn_Xk6AHudWeZrn5IPOx/exec";
   let ch = "mail";
 
   function switchCh(tab, btn) {
@@ -296,11 +296,11 @@
     const btn = document.getElementById("btn");
     btn.textContent = "Plantando..."; btn.disabled = true;
     try {
-      await fetch(SHEET_URL, {
-        method: "POST", mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: ch, contact, ts: new Date().toISOString() })
-      });
+      const form = new FormData();
+      form.append("type", ch);
+      form.append("contact", contact);
+      form.append("ts", new Date().toISOString());
+      await fetch(SHEET_URL, { method: "POST", mode: "no-cors", body: form });
     } catch(e) {}
     document.getElementById("before").style.display = "none";
     const s = document.getElementById("success");
